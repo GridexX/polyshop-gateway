@@ -16,15 +16,19 @@ public class GatewayController {
       return builder.routes()
         .route( p -> p
           .path(uriConfig.getCartPath())
-          .uri(uriConfig.getCartUri())
+          .uri("lb://cart-service")
           )
         .route( p -> p
           .path(uriConfig.getCatalogPath())
-          .uri(uriConfig.getCatalogUri())
+          .uri("lb://products-service")
           )
         .route( p -> p
           .path(uriConfig.getOrderPath())
-          .uri(uriConfig.getOrderUri())
+          .uri("lb://orders-service")
+          )
+        .route( p -> p
+          .path("/inventory")
+          .uri("lb://inventory-service")
           )
         .build();
     }
