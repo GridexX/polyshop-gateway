@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dopolytech.polyshop.gateway.configuration.UriConfig;
@@ -16,19 +17,28 @@ public class GatewayController {
       return builder.routes()
         .route( p -> p
           .path(uriConfig.getCartPath())
-          .uri("lb://cart-service")
+          .uri(uriConfig.getCartUri())
           )
         .route( p -> p
-          .path(uriConfig.getCatalogPath())
-          .uri("lb://products-service")
+          .path(uriConfig.getCartPath()+"/**")
+          .uri(uriConfig.getCartUri())
+          )
+          // .route( p -> p
+          // .path(uriConfig.getCatalogPath() + "/id")
+          // .and().method(HttpMethod.GET)
+          // .uri("forward:/products")
+          // )
+        .route( p -> p
+          .path(uriConfig.getCatalogPath()+"/**")
+          .uri(uriConfig.getCatalogUri())
           )
         .route( p -> p
           .path(uriConfig.getOrderPath())
-          .uri("lb://orders-service")
+          .uri(uriConfig.getOrderUri())
           )
         .route( p -> p
-          .path("/inventory")
-          .uri("lb://inventory-service")
+          .path(uriConfig.getInventoryPath()+"/**")
+          .uri(uriConfig.getInventoryUri())
           )
         .build();
     }

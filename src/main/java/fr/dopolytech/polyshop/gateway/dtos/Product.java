@@ -6,7 +6,9 @@ import lombok.ToString;
 @Data
 @ToString
 public class Product {
-  private long id;
-  private String name;
-  private String description;
+  public String id;
+	public String productId;
+	public String name;
+	public String description;
+	public double price;
 }

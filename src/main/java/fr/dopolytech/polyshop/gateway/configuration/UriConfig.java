@@ -8,6 +8,27 @@ public class UriConfig {
     private String catalogPath = "/products";
     private String orderPath = "/orders";
     private String inventoryPath = "/inventory";
+
+    private String cartUri = "lb://cart-service";
+    private String catalogUri = "lb://products-service";
+    private String orderUri = "lb://orders-service";
+    private String inventoryUri = "lb://inventory-service";
+
+    // Define Getter and Setter for those methods
+
+    public String getCartUri() {
+        return cartUri;
+    }
+    
+    public String getCatalogUri() {
+        return catalogUri;
+    }
+    public String getOrderUri() {
+        return orderUri;
+    }
+    public String getInventoryUri() {
+        return inventoryUri;
+    }
     
     public String getCartPath() {
         return cartPath;

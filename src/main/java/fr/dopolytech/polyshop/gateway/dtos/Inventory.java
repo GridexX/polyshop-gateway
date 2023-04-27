@@ -6,7 +6,11 @@ import lombok.ToString;
 @Data
 @ToString
 public class Inventory {
-  private String id;
-  private double price;
-  private int quantity;
+  public int id;
+  public String productId;
+  public long quantity;
+
+  public Inventory(long quantity) {
+    this.quantity = quantity;
+  }
 }

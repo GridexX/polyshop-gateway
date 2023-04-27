@@ -16,7 +16,7 @@ public class ProductAggregatorService {
   private final ProductClient productClient;
   private final InventoryClient inventoryClient;
 
-  public Mono<ProductAggregate> getProductAggregate(Long productId) {
+  public Mono<ProductAggregate> getProductAggregate(String productId) {
     return Mono.zip(
       this.productClient.getProduct(productId),
       this.inventoryClient.getInventory(productId)
@@ -30,7 +30,7 @@ public class ProductAggregatorService {
       product.getId(),
       product.getName(),
       product.getDescription(),
-      inventory.getPrice(),
+      product.getPrice(),
       inventory.getQuantity()
     );
   }

@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  gateway:
+    image: maven:3.9-amazoncorretto-19
+    container_name: gateway
+    ports:
+      - 8082:8082
+    volumes:
+      - .:/app
+      - maven-repo:/root/.m2
+    working_dir: /app
+    command: mvn spring-boot:run
+    environment:
+      - EUREKA_HOST=discovery-server
+    networks:
+      - spring_microservices
+
+volumes:
+  maven-repo:
+
+networks:
+  spring_microservices:
+    external: true

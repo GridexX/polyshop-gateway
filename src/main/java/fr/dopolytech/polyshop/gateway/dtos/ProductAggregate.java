@@ -8,9 +8,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor(staticName = "create")
 public class ProductAggregate {
-  private long id;
+  private String id;
   private String name;
   private String description;
   private double price;
-  private int quantity;
+  private long quantity;
 }
