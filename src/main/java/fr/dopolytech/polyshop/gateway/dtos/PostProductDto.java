@@ -7,7 +7,9 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor(staticName = "create")
-public class Inventory {
-  public String id;
-  public long quantity;
+public class PostProductDto {
+  private String name;
+  private String description;
+  private double price;
+  private long quantity;
 }

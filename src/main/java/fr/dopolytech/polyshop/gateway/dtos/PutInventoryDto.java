@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
-@Data
 @ToString
+@Data
 @AllArgsConstructor(staticName = "create")
-public class Inventory {
-  public String id;
-  public long quantity;
+public class PutInventoryDto {
+  long quantity;
+
+  public PutInventoryDto() {
+  }
 }
