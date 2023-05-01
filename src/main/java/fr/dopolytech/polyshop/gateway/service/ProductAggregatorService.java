@@ -6,6 +6,8 @@ import fr.dopolytech.polyshop.gateway.dtos.Inventory;
 import fr.dopolytech.polyshop.gateway.dtos.PostProductDto;
 import fr.dopolytech.polyshop.gateway.dtos.Product;
 import fr.dopolytech.polyshop.gateway.dtos.ProductAggregate;
+import fr.dopolytech.polyshop.gateway.dtos.ProductCart;
+import fr.dopolytech.polyshop.gateway.dtos.ProductCartAggregate;
 import fr.dopolytech.polyshop.gateway.dtos.PutInventoryDto;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;
@@ -18,6 +20,7 @@ public class ProductAggregatorService {
 
   private final ProductClient productClient;
   private final InventoryClient inventoryClient;
+  private final CartClient cartClient;
 
   public Mono<ProductAggregate> getProductAggregate(String productId) {
     return Mono.zip(
@@ -64,11 +67,23 @@ public class ProductAggregatorService {
         postProductDto.getDescription(), postProductDto.getPrice(), postProductDto.getQuantity());
 
     return Mono.zip(
-      this.productClient.updateProduct(productId, postProductDto),
-      this.inventoryClient.updateInventory(productId, PutInventoryDto.create(
-        productAggregate.getQuantity())))
-      .map(this::combine);
-    
+        this.productClient.updateProduct(productId, postProductDto),
+        this.inventoryClient.updateInventory(productId, PutInventoryDto.create(
+            productAggregate.getQuantity())))
+        .map(this::combine);
+
+  }
+
+  public Flux<ProductCartAggregate> getProductsCart() {
+
+    Flux<ProductCart> productCartFlux = cartClient.getCart();
+
+    return productCartFlux.flatMap(productCart -> {
+      Mono<Product> productMono = productClient.getProduct(productCart.getId());
+      return Mono.zip(productMono, Mono.just(productCart))
+          .map(tuple -> ProductCartAggregate.create(tuple.getT1().id, tuple.getT1().name, tuple.getT1().description,
+              tuple.getT1().price, productCart.getAmount()));
+    });
 
   }
 }

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.dopolytech.polyshop.gateway.dtos.PostProductDto;
 import fr.dopolytech.polyshop.gateway.dtos.Product;
 import fr.dopolytech.polyshop.gateway.dtos.ProductAggregate;
+import fr.dopolytech.polyshop.gateway.dtos.ProductCart;
+import fr.dopolytech.polyshop.gateway.dtos.ProductCartAggregate;
 import fr.dopolytech.polyshop.gateway.service.ProductAggregatorService;
 import fr.dopolytech.polyshop.gateway.service.ProductClient;
 import reactor.core.publisher.Flux;
@@ -58,6 +60,11 @@ public class ProductAggregateController {
   @GetMapping
   public Flux<Product> getProducts() {
     return service.getProducts();
+  }
+
+  @GetMapping("/cart")
+  public Flux<ProductCartAggregate> getProductsCart() {
+    return service.getProductsCart();
   }
 
 }
