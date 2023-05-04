@@ -8,11 +8,13 @@ public class UriConfig {
     private String catalogPath = "/products";
     private String orderPath = "/orders";
     private String inventoryPath = "/inventory";
+    private String inventoryCommandPath = "/inventory";
 
     private String cartUri = "lb://cart-service";
     private String catalogUri = "lb://products-service";
     private String orderUri = "lb://orders-service";
     private String inventoryUri = "lb://inventory-service";
+    private String inventoryCommandUri = "lb://inventory-service-command";
 
     // Define Getter and Setter for those methods
 
@@ -60,6 +62,14 @@ public class UriConfig {
 
     public void setInventoryPath(String inventoryPath) {
         this.inventoryPath = inventoryPath;
+    }
+
+    public String getInventoryCommandPath() {
+        return this.inventoryCommandPath;
+    }
+
+    public String getInventoryCommandUri() {
+        return this.inventoryCommandUri;
     }
 
 }
